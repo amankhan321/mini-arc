@@ -10,172 +10,165 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.4/ethers.umd.min.js"></script>
 <style>
   :root{
-    --ink:#0B0D12;
-    --panel:#11141C;
-    --panel-2:#161A24;
-    --line:#232833;
-    --line-faint:rgba(255,255,255,.028);
-    --paper:#F4F0E7;
-    --paper-2:#EAE5D8;
-    --on-paper:#191C21;
-    --paper-soft:#645E52;
-    --paper-faint:#948D7C;
-    --volt:#4269FF;
-    --volt-press:#3355e6;
-    --jade:#12B877;
-    --rose:#E0563B;
-    --txt:#EAEDF4;
-    --txt-dim:#8b94a8;
-    --txt-faint:#5b6478;
-    --r:7px;
+    --bg:#F1ECDF;
+    --card:#FCFAF5;
+    --ink:#1A1C22;
+    --ink-2:#565961;
+    --ink-faint:#8f8a7d;
+    --line:rgba(26,28,34,.12);
+    --line-2:rgba(26,28,34,.06);
+    --card-soft:#6b665a;
+    --card-faint:#a49d8e;
+    --volt:#3B5DF0;
+    --volt-press:#2f4bd0;
+    --jade:#0F9E63;
+    --rose:#D14A2E;
+    --r:8px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
   body{
     font-family:"Space Grotesk",system-ui,sans-serif;
-    color:var(--txt);
-    background-color:var(--ink);
+    color:var(--ink);
+    background-color:var(--bg);
     background-image:
-      radial-gradient(120% 80% at 50% -20%, rgba(66,105,255,.10), transparent 55%),
-      linear-gradient(var(--line-faint) 1px, transparent 1px),
-      linear-gradient(90deg, var(--line-faint) 1px, transparent 1px);
+      radial-gradient(115% 70% at 50% -10%, rgba(59,93,240,.06), transparent 55%),
+      linear-gradient(var(--line-2) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-2) 1px, transparent 1px);
     background-size:auto, 48px 48px, 48px 48px;
-    min-height:100dvh;
-    display:flex;flex-direction:column;
-    -webkit-font-smoothing:antialiased;
-    overflow-x:hidden;
+    min-height:100dvh;display:flex;flex-direction:column;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
   }
   .wrap{width:100%;max-width:1180px;margin:0 auto;padding:0 28px;flex:1;display:flex;flex-direction:column}
 
-  /* ---------- top rail ---------- */
+  /* top rail */
   .rail{display:flex;align-items:center;justify-content:space-between;padding:22px 0 26px}
-  .mark{display:flex;align-items:center;gap:10px;font-family:"IBM Plex Mono",monospace;font-size:13px;letter-spacing:.12em;font-weight:500;color:#cfd5e3}
+  .mark{display:flex;align-items:center;gap:10px;font-family:"IBM Plex Mono",monospace;font-size:13px;letter-spacing:.12em;font-weight:500;color:var(--ink)}
   .mark .glyph{width:20px;height:20px;border-radius:50%;
     background:conic-gradient(from 210deg, var(--volt), #9db0ff 140deg, var(--volt) 300deg);
-    box-shadow:0 0 0 1px rgba(255,255,255,.08) inset,0 0 16px rgba(66,105,255,.5)}
+    box-shadow:0 0 0 1px rgba(0,0,0,.06) inset,0 4px 14px rgba(59,93,240,.35)}
   .rail-right{display:flex;align-items:center;gap:12px}
-  .tnet{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--txt-faint);
-    border:1px solid var(--line);padding:5px 9px;border-radius:999px}
-  .chip{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border:1px solid var(--line);border-radius:999px;
-    background:rgba(255,255,255,.02);font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:#aab3c7;cursor:default;
-    transition:border-color .2s,color .2s}
-  .chip .pip{width:6px;height:6px;border-radius:50%;background:#5a6478;transition:background .25s}
-  .chip.live{color:#d7f0e4;border-color:rgba(18,184,119,.35)}
-  .chip.live .pip{background:var(--jade);box-shadow:0 0 9px var(--jade)}
-  .chip.warn .pip{background:#e0a92e;box-shadow:0 0 9px #e0a92e}
+  .tnet{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);border:1px solid var(--line);padding:5px 9px;border-radius:999px}
+  .chip{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.5);font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--ink-2);cursor:default;transition:border-color .2s,color .2s}
+  .chip .pip{width:6px;height:6px;border-radius:50%;background:#b3ab99;transition:background .25s}
+  .chip.live{color:#0c7a4b;border-color:rgba(15,158,99,.4)}
+  .chip.live .pip{background:var(--jade);box-shadow:0 0 8px rgba(15,158,99,.5)}
+  .chip.warn .pip{background:#d99a20;box-shadow:0 0 8px rgba(217,154,32,.5)}
 
-  /* ---------- hero grid ---------- */
+  /* hero */
   .hero{display:grid;grid-template-columns:1fr 404px;gap:64px;align-items:start;padding:20px 0 56px;flex:1}
 
-  .lead .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--volt);font-weight:500;margin-bottom:20px}
-  .lead h1{font-size:clamp(38px,5vw,58px);line-height:1.02;letter-spacing:-.022em;font-weight:600;margin-bottom:20px}
-  .lead h1 em{font-style:normal;color:var(--txt-dim)}
-  .lead .sub{font-size:16px;line-height:1.6;color:var(--txt-dim);max-width:46ch;margin-bottom:40px}
+  .lead-copy{display:inline-block;transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+  .lead-copy:hover{transform:translateY(-5px)}
+  .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--volt);font-weight:500;margin-bottom:20px}
+  .lead h1{font-size:clamp(38px,5vw,58px);line-height:1.02;letter-spacing:-.022em;font-weight:600;margin-bottom:20px;color:var(--ink)}
+  .lead h1 em{font-style:normal;color:var(--ink-faint)}
+  .sub{font-size:16px;line-height:1.6;color:var(--ink-2);max-width:46ch;margin-bottom:40px}
 
-  .features{display:grid;gap:0;border-top:1px solid var(--line)}
-  .feat{padding:22px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:26px 1fr;gap:16px}
+  .features{display:grid;gap:8px;margin-top:8px}
+  .feat{padding:20px 16px 20px 14px;border-radius:var(--r);display:grid;grid-template-columns:26px 1fr;gap:16px;
+    border:1px solid transparent;transition:transform .28s cubic-bezier(.2,.7,.2,1),box-shadow .28s,background .28s,border-color .28s}
+  .feat+.feat{border-top:1px solid var(--line)}
+  .feat:hover{transform:translateY(-4px);background:var(--card);border-color:var(--line);border-top-color:var(--line);
+    box-shadow:0 16px 30px -18px rgba(40,36,28,.4)}
   .feat .fi{font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--volt);padding-top:2px}
-  .feat h3{font-size:16.5px;font-weight:600;letter-spacing:-.01em;margin-bottom:6px}
-  .feat p{font-size:14px;line-height:1.55;color:var(--txt-dim);max-width:52ch}
+  .feat h3{font-size:16.5px;font-weight:600;letter-spacing:-.01em;margin-bottom:6px;color:var(--ink)}
+  .feat p{font-size:14px;line-height:1.55;color:var(--ink-2);max-width:52ch}
 
-  /* ---------- receipt slip ---------- */
-  .slip-col{position:sticky;top:24px}
-  .slip{position:relative;background:var(--paper);color:var(--on-paper);
-    border-radius:var(--r) var(--r) 0 0;padding:24px 24px 28px;
-    box-shadow:0 40px 80px -28px rgba(0,0,0,.75),0 2px 0 rgba(255,255,255,.5) inset,0 0 0 1px rgba(0,0,0,.35);}
-  .slip-head{display:flex;justify-content:space-between;align-items:baseline;padding-bottom:14px;margin-bottom:20px;border-bottom:1px dashed rgba(25,28,33,.22)}
-  .slip-head .k{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--paper-faint)}
-  .slip-head .v{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--paper-soft)}
+  /* receipt slip + 3D */
+  .slip-col{perspective:1700px}
+  .slip3d{transform:rotateY(-5deg) rotateX(2deg);transform-style:preserve-3d;transform-origin:center right;
+    transition:transform .55s cubic-bezier(.2,.7,.2,1)}
+  .slip3d:hover,.slip3d:focus-within{transform:rotateY(0) rotateX(0)}
 
-  .amt-label{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--paper-faint);margin-bottom:6px}
-  .amt-row{display:flex;align-items:baseline;gap:3px;border-bottom:2px solid var(--on-paper);padding-bottom:8px}
-  .cur{font-family:"IBM Plex Mono",monospace;font-size:24px;color:var(--paper-soft);font-weight:500;transform:translateY(-3px)}
-  #amount{flex:1;min-width:0;border:none;background:transparent;outline:none;font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:46px;line-height:1;color:var(--on-paper);letter-spacing:-.02em}
-  #amount::placeholder{color:#cec7b6}
-  .unit{font-family:"Space Grotesk";font-weight:600;font-size:14px;color:var(--paper-soft);letter-spacing:.02em}
-  .bal{display:flex;justify-content:space-between;margin-top:9px;font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--paper-soft)}
+  .slip{position:relative;background:var(--card);color:var(--ink);border-radius:var(--r) var(--r) 0 0;padding:24px 24px 28px;
+    box-shadow:0 34px 66px -26px rgba(43,38,28,.4),0 3px 8px rgba(43,38,28,.06),0 0 0 1px rgba(0,0,0,.05)}
+  .slip-head{display:flex;justify-content:space-between;align-items:baseline;padding-bottom:14px;margin-bottom:20px;border-bottom:1px dashed var(--line)}
+  .slip-head .k{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--card-faint)}
+  .slip-head .v{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--card-soft)}
+
+  .amt-label{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--card-faint);margin-bottom:6px}
+  .amt-row{display:flex;align-items:baseline;gap:3px;border-bottom:2px solid var(--ink);padding-bottom:8px}
+  .cur{font-family:"IBM Plex Mono",monospace;font-size:24px;color:var(--card-soft);font-weight:500;transform:translateY(-3px)}
+  #amount{flex:1;min-width:0;border:none;background:transparent;outline:none;font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:46px;line-height:1;color:var(--ink);letter-spacing:-.02em}
+  #amount::placeholder{color:#d3ccbc}
+  .unit{font-family:"Space Grotesk";font-weight:600;font-size:14px;color:var(--card-soft);letter-spacing:.02em}
+  .bal{display:flex;justify-content:space-between;margin-top:9px;font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--card-soft)}
   .bal .max{cursor:pointer;color:var(--volt);font-weight:600}
   .bal .max:hover{text-decoration:underline}
 
   .field{margin-top:18px}
-  .field label{display:block;font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--paper-faint);margin-bottom:7px}
-  .field label .opt{text-transform:none;letter-spacing:0;color:var(--paper-faint)}
-  .field input{width:100%;padding:12px 13px;border:1px solid rgba(25,28,33,.16);border-radius:var(--r);background:#fbf9f3;
-    font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--on-paper);outline:none;transition:border-color .15s,box-shadow .15s}
-  .field input:focus{border-color:var(--volt);box-shadow:0 0 0 3px rgba(66,105,255,.15)}
-  .field input::placeholder{color:#bab3a2}
+  .field label{display:block;font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--card-faint);margin-bottom:7px}
+  .field label .opt{text-transform:none;letter-spacing:0;color:var(--card-faint)}
+  .field input{width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:var(--r);background:#fffdf8;font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--ink);outline:none;transition:border-color .15s,box-shadow .15s}
+  .field input:focus{border-color:var(--volt);box-shadow:0 0 0 3px rgba(59,93,240,.15)}
+  .field input::placeholder{color:#c2bbaa}
   .hint{margin-top:7px;font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--rose);min-height:13px}
-  .hint.ok{color:var(--paper-faint)}
+  .hint.ok{color:var(--card-faint)}
 
-  .btn{width:100%;margin-top:22px;padding:15px;border:none;border-radius:var(--r);font-family:"Space Grotesk";font-weight:600;font-size:15px;
-    color:#fff;background:var(--volt);cursor:pointer;transition:background .15s,transform .05s,opacity .15s;
-    display:flex;align-items:center;justify-content:center;gap:10px}
+  .btn{width:100%;margin-top:22px;padding:15px;border:none;border-radius:var(--r);font-family:"Space Grotesk";font-weight:600;font-size:15px;color:#fff;background:var(--volt);cursor:pointer;transition:background .15s,transform .05s,opacity .15s;display:flex;align-items:center;justify-content:center;gap:10px}
   .btn:hover:not(:disabled){background:var(--volt-press)}
   .btn:active:not(:disabled){transform:translateY(1px)}
   .btn:disabled{opacity:.45;cursor:not-allowed}
-  .btn.ghost{background:transparent;color:var(--volt);border:1px solid rgba(25,28,33,.18)}
-  .btn.ghost:hover:not(:disabled){background:#fbf9f3}
+  .btn.ghost{background:transparent;color:var(--volt);border:1px solid var(--line)}
+  .btn.ghost:hover:not(:disabled){background:#fffdf8}
   .btn .spin{width:15px;height:15px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
   @keyframes spin{to{transform:rotate(360deg)}}
 
-  .slip-foot{margin-top:15px;text-align:center;font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--paper-faint);line-height:1.7}
-  .slip-foot b{color:var(--paper-soft);font-weight:500}
+  .slip-foot{margin-top:15px;text-align:center;font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--card-faint);line-height:1.7}
+  .slip-foot b{color:var(--card-soft);font-weight:500}
 
-  .tear{height:13px;background:var(--paper);
-    -webkit-mask:radial-gradient(8px at 50% 0,#0000 97%,#000) 50% 0/17px 100% repeat-x;
-            mask:radial-gradient(8px at 50% 0,#0000 97%,#000) 50% 0/17px 100% repeat-x}
+  .tear{height:13px;background:var(--card);-webkit-mask:radial-gradient(8px at 50% 0,#0000 97%,#000) 50% 0/17px 100% repeat-x;mask:radial-gradient(8px at 50% 0,#0000 97%,#000) 50% 0/17px 100% repeat-x}
 
-  /* chain params under slip */
   .params{margin-top:22px;display:flex;flex-wrap:wrap;gap:7px}
-  .param{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--txt-faint);border:1px solid var(--line);border-radius:5px;padding:6px 9px;line-height:1}
-  .param b{color:var(--txt-dim);font-weight:500}
+  .param{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--ink-faint);border:1px solid var(--line);border-radius:5px;padding:6px 9px;line-height:1;background:rgba(255,255,255,.4)}
+  .param b{color:var(--ink-2);font-weight:500}
 
   /* receipt state */
   .rc-head{margin-bottom:18px}
-  .stamp{display:inline-flex;align-items:center;gap:7px;padding:6px 12px;border-radius:999px;background:rgba(18,184,119,.1);color:#0e8f5c;border:1px solid rgba(18,184,119,.3);
-    font-family:"IBM Plex Mono",monospace;font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase}
+  .stamp{display:inline-flex;align-items:center;gap:7px;padding:6px 12px;border-radius:999px;background:rgba(15,158,99,.1);color:#0c7a4b;border:1px solid rgba(15,158,99,.3);font-family:"IBM Plex Mono",monospace;font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase}
   .stamp svg{width:12px;height:12px}
-  .rc-amt{font-family:"IBM Plex Mono",monospace;font-size:38px;font-weight:600;color:var(--on-paper);letter-spacing:-.02em;margin:14px 0 2px}
-  .rc-amt span{font-size:15px;color:var(--paper-soft);font-weight:500;font-family:"Space Grotesk"}
-  .rc-list{margin-top:18px;border-top:1px dashed rgba(25,28,33,.22);padding-top:15px;display:grid;gap:11px}
+  .rc-amt{font-family:"IBM Plex Mono",monospace;font-size:38px;font-weight:600;color:var(--ink);letter-spacing:-.02em;margin:14px 0 2px}
+  .rc-amt span{font-size:15px;color:var(--card-soft);font-weight:500;font-family:"Space Grotesk"}
+  .rc-list{margin-top:18px;border-top:1px dashed var(--line);padding-top:15px;display:grid;gap:11px}
   .rc-row{display:flex;justify-content:space-between;align-items:baseline;gap:14px}
-  .rc-row .rk{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--paper-faint);white-space:nowrap}
-  .rc-row .rv{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--on-paper);text-align:right;word-break:break-all}
+  .rc-row .rk{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--card-faint);white-space:nowrap}
+  .rc-row .rv{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink);text-align:right;word-break:break-all}
   .rc-row a.rv{color:var(--volt);text-decoration:none}
   .rc-row a.rv:hover{text-decoration:underline}
-  .memo-note{margin-top:13px;padding:11px 13px;background:#fbf9f3;border:1px dashed rgba(25,28,33,.18);border-radius:var(--r);font-size:12.5px;color:var(--paper-soft);line-height:1.5}
-  .memo-note b{display:block;font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--paper-faint);margin-bottom:4px;font-weight:500}
+  .memo-note{margin-top:13px;padding:11px 13px;background:#fffdf8;border:1px dashed var(--line);border-radius:var(--r);font-size:12.5px;color:var(--card-soft);line-height:1.5}
+  .memo-note b{display:block;font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--card-faint);margin-bottom:4px;font-weight:500}
 
-  /* ---------- live tape ---------- */
-  .tape{border-top:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.015),transparent);overflow:hidden;position:relative}
+  /* live tape */
+  .tape{border-top:1px solid var(--line);background:rgba(255,255,255,.35);overflow:hidden;position:relative}
   .tape::before,.tape::after{content:"";position:absolute;top:0;bottom:0;width:80px;z-index:2;pointer-events:none}
-  .tape::before{left:0;background:linear-gradient(90deg,var(--ink),transparent)}
-  .tape::after{right:0;background:linear-gradient(270deg,var(--ink),transparent)}
+  .tape::before{left:0;background:linear-gradient(90deg,var(--bg),transparent)}
+  .tape::after{right:0;background:linear-gradient(270deg,var(--bg),transparent)}
   .tape-track{display:flex;width:max-content;animation:marq 42s linear infinite}
   .tape:hover .tape-track{animation-play-state:paused}
   @keyframes marq{to{transform:translateX(-50%)}}
-  .tick{display:inline-flex;align-items:baseline;gap:9px;padding:15px 26px;font-family:"IBM Plex Mono",monospace;white-space:nowrap;border-right:1px solid var(--line-faint)}
-  .tick .sym{font-size:12px;font-weight:600;letter-spacing:.06em;color:#c9d0df}
-  .tick .px{font-size:12.5px;color:var(--txt-dim)}
+  .tick{display:inline-flex;align-items:baseline;gap:9px;padding:15px 26px;font-family:"IBM Plex Mono",monospace;white-space:nowrap;border-right:1px solid var(--line-2)}
+  .tick .sym{font-size:12px;font-weight:600;letter-spacing:.06em;color:var(--ink)}
+  .tick .px{font-size:12.5px;color:var(--ink-2)}
   .tick .chg{font-size:11px;font-weight:500}
   .tick .chg.up{color:var(--jade)}
   .tick .chg.dn{color:var(--rose)}
-  .tick .chg.flat{color:var(--txt-faint)}
+  .tick .chg.flat{color:var(--ink-faint)}
 
-  /* ---------- load motion ---------- */
+  /* load motion */
   .anim{opacity:0;transform:translateY(10px)}
   body.ready .anim{opacity:1;transform:none;transition:opacity .6s cubic-bezier(.2,.7,.2,1),transform .6s cubic-bezier(.2,.7,.2,1)}
   body.ready .d1{transition-delay:.05s}
   body.ready .d2{transition-delay:.12s}
   body.ready .d3{transition-delay:.19s}
   body.ready .d4{transition-delay:.26s}
-  .slip-col.anim{transform:translateY(14px)}
 
   .hidden{display:none!important}
 
   @media (max-width:900px){
     .hero{grid-template-columns:1fr;gap:40px;padding-top:8px}
-    .slip-col{position:static;order:-1;max-width:420px;margin:0 auto;width:100%}
+    .slip-col{order:-1;max-width:420px;margin:0 auto;width:100%;perspective:none}
+    .slip3d{transform:none!important}
     .lead h1{font-size:clamp(34px,8vw,46px)}
   }
   @media (max-width:520px){
@@ -189,12 +182,13 @@
     *{animation:none!important}
     .anim{opacity:1;transform:none}
     .tape-track{animation:none;transform:none}
+    .slip3d{transform:none!important}
+    .lead-copy:hover,.feat:hover{transform:none}
   }
 </style>
 </head>
 <body>
   <div class="wrap">
-    <!-- top rail -->
     <header class="rail">
       <div class="mark anim d1"><span class="glyph"></span>ARC · USDC</div>
       <div class="rail-right anim d1">
@@ -204,11 +198,12 @@
     </header>
 
     <main class="hero">
-      <!-- LEFT: product + features -->
       <section class="lead">
-        <div class="eyebrow anim d1">Arc Testnet · Payments</div>
-        <h1 class="anim d2">Pay in USDC,<br><em>wallet to wallet.</em></h1>
-        <p class="sub anim d3">A non-custodial checkout for Arc, the stablecoin-native L1 where USDC is the gas. Enter an amount, send it, and walk away with a receipt you can verify on-chain. No account, no middleman, no backend.</p>
+        <div class="lead-copy anim d2">
+          <div class="eyebrow">Arc Testnet · Payments</div>
+          <h1>Pay in USDC,<br><em>wallet to wallet.</em></h1>
+          <p class="sub">A non-custodial checkout for Arc, the stablecoin-native L1 where USDC is the gas. Enter an amount, send it, and walk away with a receipt you can verify on-chain. No account, no middleman, no backend.</p>
+        </div>
 
         <div class="features anim d4">
           <div class="feat">
@@ -226,59 +221,39 @@
         </div>
       </section>
 
-      <!-- RIGHT: the slip -->
       <aside class="slip-col anim d3">
-        <!-- pay slip -->
-        <section id="payCard" class="slip">
-          <div class="slip-head"><span class="k">Payment</span><span class="v">Arc Testnet</span></div>
-          <div class="amt-label">Amount</div>
-          <div class="amt-row">
-            <span class="cur">$</span>
-            <input id="amount" inputmode="decimal" placeholder="0.00" autocomplete="off" />
-            <span class="unit">USDC</span>
-          </div>
-          <div class="bal"><span id="balText">Balance —</span><span id="maxBtn" class="max hidden">Max</span></div>
+        <div class="slip3d">
+          <section id="payCard" class="slip">
+            <div class="slip-head"><span class="k">Payment</span><span class="v">Arc Testnet</span></div>
+            <div class="amt-label">Amount</div>
+            <div class="amt-row"><span class="cur">$</span><input id="amount" inputmode="decimal" placeholder="0.00" autocomplete="off" /><span class="unit">USDC</span></div>
+            <div class="bal"><span id="balText">Balance —</span><span id="maxBtn" class="max hidden">Max</span></div>
+            <div class="field"><label for="to">Pay to</label><input id="to" placeholder="0x… recipient address" autocomplete="off" spellcheck="false" /><div id="toHint" class="hint"></div></div>
+            <div class="field"><label for="memo">Note <span class="opt">— optional</span></label><input id="memo" placeholder="What's this payment for?" maxlength="80" autocomplete="off" /></div>
+            <button id="action" class="btn">Connect wallet</button>
+            <div id="actionHint" class="hint ok" style="text-align:center;margin-top:11px"></div>
+            <div class="slip-foot">Non-custodial · funds move wallet&nbsp;→&nbsp;wallet<br />via <b>0x3600…0000</b> · gas paid in USDC</div>
+          </section>
+          <div id="payTear" class="tear"></div>
 
-          <div class="field">
-            <label for="to">Pay to</label>
-            <input id="to" placeholder="0x… recipient address" autocomplete="off" spellcheck="false" />
-            <div id="toHint" class="hint"></div>
-          </div>
-          <div class="field">
-            <label for="memo">Note <span class="opt">— optional</span></label>
-            <input id="memo" placeholder="What's this payment for?" maxlength="80" autocomplete="off" />
-          </div>
+          <section id="receiptCard" class="slip hidden">
+            <div class="rc-head"><span class="stamp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Settled</span></div>
+            <div class="amt-label">Paid</div>
+            <div class="rc-amt"><span id="rcAmt">0.00</span> <span>USDC</span></div>
+            <div class="rc-list">
+              <div class="rc-row"><span class="rk">From</span><span id="rcFrom" class="rv"></span></div>
+              <div class="rc-row"><span class="rk">To</span><span id="rcTo" class="rv"></span></div>
+              <div class="rc-row"><span class="rk">Tx</span><a id="rcTx" class="rv" target="_blank" rel="noopener"></a></div>
+              <div class="rc-row"><span class="rk">Block</span><span id="rcBlock" class="rv"></span></div>
+              <div class="rc-row"><span class="rk">Time</span><span id="rcTime" class="rv"></span></div>
+            </div>
+            <div id="rcMemoWrap" class="memo-note hidden"><b>Note</b><span id="rcMemo"></span></div>
+            <button id="again" class="btn ghost" style="margin-top:20px">New payment</button>
+            <div class="slip-foot">Receipt generated locally · verify anytime on <b>Arcscan</b></div>
+          </section>
+          <div id="receiptTear" class="tear hidden"></div>
+        </div>
 
-          <button id="action" class="btn">Connect wallet</button>
-          <div id="actionHint" class="hint ok" style="text-align:center;margin-top:11px"></div>
-          <div class="slip-foot">Non-custodial · funds move wallet&nbsp;→&nbsp;wallet<br />via <b>0x3600…0000</b> · gas paid in USDC</div>
-        </section>
-        <div id="payTear" class="tear"></div>
-
-        <!-- receipt -->
-        <section id="receiptCard" class="slip hidden">
-          <div class="rc-head">
-            <span class="stamp">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-              Settled
-            </span>
-          </div>
-          <div class="amt-label">Paid</div>
-          <div class="rc-amt"><span id="rcAmt">0.00</span> <span>USDC</span></div>
-          <div class="rc-list">
-            <div class="rc-row"><span class="rk">From</span><span id="rcFrom" class="rv"></span></div>
-            <div class="rc-row"><span class="rk">To</span><span id="rcTo" class="rv"></span></div>
-            <div class="rc-row"><span class="rk">Tx</span><a id="rcTx" class="rv" target="_blank" rel="noopener"></a></div>
-            <div class="rc-row"><span class="rk">Block</span><span id="rcBlock" class="rv"></span></div>
-            <div class="rc-row"><span class="rk">Time</span><span id="rcTime" class="rv"></span></div>
-          </div>
-          <div id="rcMemoWrap" class="memo-note hidden"><b>Note</b><span id="rcMemo"></span></div>
-          <button id="again" class="btn ghost" style="margin-top:20px">New payment</button>
-          <div class="slip-foot">Receipt generated locally · verify anytime on <b>Arcscan</b></div>
-        </section>
-        <div id="receiptTear" class="tear hidden"></div>
-
-        <!-- chain params -->
         <div class="params anim d4">
           <span class="param"><b>Chain</b> 5042002</span>
           <span class="param"><b>USDC</b> 0x3600…0000</span>
@@ -288,82 +263,50 @@
     </main>
   </div>
 
-  <!-- live market tape -->
-  <div class="tape" aria-label="Live market prices">
-    <div id="tapeTrack" class="tape-track"></div>
-  </div>
+  <div class="tape" aria-label="Live market prices"><div id="tapeTrack" class="tape-track"></div></div>
 
 <script>
 (function(){
   "use strict";
+  const CHAIN_ID_DEC=5042002, CHAIN_ID_HEX="0x"+CHAIN_ID_DEC.toString(16);
+  const RPC="https://rpc.testnet.arc.network", EXPLORER="https://testnet.arcscan.app";
+  const USDC="0x3600000000000000000000000000000000000000";
+  const ARC_PARAMS={chainId:CHAIN_ID_HEX,chainName:"Arc Testnet",nativeCurrency:{name:"USD Coin",symbol:"USDC",decimals:18},rpcUrls:[RPC],blockExplorerUrls:[EXPLORER]};
+  const ERC20=["function decimals() view returns (uint8)","function balanceOf(address) view returns (uint256)","function transfer(address to, uint256 amount) returns (bool)"];
 
-  /* ================= Arc Testnet payment engine ================= */
-  const CHAIN_ID_DEC = 5042002;
-  const CHAIN_ID_HEX = "0x" + CHAIN_ID_DEC.toString(16);
-  const RPC = "https://rpc.testnet.arc.network";
-  const EXPLORER = "https://testnet.arcscan.app";
-  const USDC = "0x3600000000000000000000000000000000000000";
-  const ARC_PARAMS = { chainId:CHAIN_ID_HEX, chainName:"Arc Testnet",
-    nativeCurrency:{ name:"USD Coin", symbol:"USDC", decimals:18 },
-    rpcUrls:[RPC], blockExplorerUrls:[EXPLORER] };
-  const ERC20 = [
-    "function decimals() view returns (uint8)",
-    "function balanceOf(address) view returns (uint256)",
-    "function transfer(address to, uint256 amount) returns (bool)"
-  ];
-
-  let provider, signer, account=null, decimals=6, balance=0n, busy=false;
-  const $ = id => document.getElementById(id);
-  const chip=$("chip"), chipText=$("chipText"), amountEl=$("amount"), toEl=$("to"), memoEl=$("memo");
-  const balText=$("balText"), maxBtn=$("maxBtn"), toHint=$("toHint"), actionHint=$("actionHint"), action=$("action");
-  const payCard=$("payCard"), payTear=$("payTear"), receiptCard=$("receiptCard"), receiptTear=$("receiptTear");
+  let provider,signer,account=null,decimals=6,balance=0n,busy=false;
+  const $=id=>document.getElementById(id);
+  const chip=$("chip"),chipText=$("chipText"),amountEl=$("amount"),toEl=$("to"),memoEl=$("memo");
+  const balText=$("balText"),maxBtn=$("maxBtn"),toHint=$("toHint"),actionHint=$("actionHint"),action=$("action");
+  const payCard=$("payCard"),payTear=$("payTear"),receiptCard=$("receiptCard"),receiptTear=$("receiptTear");
   const short=a=>a?a.slice(0,6)+"…"+a.slice(-4):"";
   const hasWallet=()=>typeof window.ethereum!=="undefined";
-  function setChip(state,text){ chip.className="chip"+(state?" "+state:""); chipText.textContent=text; }
+  function setChip(s,t){ chip.className="chip"+(s?" "+s:""); chipText.textContent=t; }
 
   async function connect(){
     if(!hasWallet()){ actionHint.classList.remove("ok"); actionHint.textContent="No EVM wallet found. Open this page with MetaMask installed."; return; }
-    try{
-      await window.ethereum.request({ method:"eth_requestAccounts" });
-      await ensureArc();
-      provider = new ethers.BrowserProvider(window.ethereum);
-      signer = await provider.getSigner();
-      account = await signer.getAddress();
+    try{ await window.ethereum.request({method:"eth_requestAccounts"}); await ensureArc();
+      provider=new ethers.BrowserProvider(window.ethereum); signer=await provider.getSigner(); account=await signer.getAddress();
       await loadBalance(); wireLive(); render();
     }catch(e){ handleErr(e); }
   }
   async function ensureArc(){
-    const cur = await window.ethereum.request({ method:"eth_chainId" });
-    if(cur===CHAIN_ID_HEX) return;
-    try{ await window.ethereum.request({ method:"wallet_switchEthereumChain", params:[{chainId:CHAIN_ID_HEX}] }); }
-    catch(err){
-      const c = err && (err.code || (err.data&&err.data.originalError&&err.data.originalError.code));
-      if(c===4902) await window.ethereum.request({ method:"wallet_addEthereumChain", params:[ARC_PARAMS] });
-      else throw err;
-    }
+    const cur=await window.ethereum.request({method:"eth_chainId"}); if(cur===CHAIN_ID_HEX) return;
+    try{ await window.ethereum.request({method:"wallet_switchEthereumChain",params:[{chainId:CHAIN_ID_HEX}]}); }
+    catch(err){ const c=err&&(err.code||(err.data&&err.data.originalError&&err.data.originalError.code));
+      if(c===4902) await window.ethereum.request({method:"wallet_addEthereumChain",params:[ARC_PARAMS]}); else throw err; }
   }
   async function loadBalance(){
-    try{
-      const c=new ethers.Contract(USDC,ERC20,provider);
-      decimals=Number(await c.decimals());
-      balance=await c.balanceOf(account);
-      balText.textContent="Balance "+fmt(balance)+" USDC";
-      maxBtn.classList.remove("hidden");
+    try{ const c=new ethers.Contract(USDC,ERC20,provider); decimals=Number(await c.decimals()); balance=await c.balanceOf(account);
+      balText.textContent="Balance "+fmt(balance)+" USDC"; maxBtn.classList.remove("hidden");
     }catch(e){ balText.textContent="Balance unavailable"; }
   }
-  function fmt(raw){ return Number(ethers.formatUnits(raw,decimals)).toLocaleString(undefined,{maximumFractionDigits:4}); }
-  function wireLive(){
-    if(!window.ethereum||window.ethereum.__arcWired) return;
-    window.ethereum.__arcWired=true;
-    window.ethereum.on("accountsChanged",()=>location.reload());
-    window.ethereum.on("chainChanged",()=>location.reload());
-  }
-  function validAddr(a){ try{ return ethers.isAddress(a); }catch{ return false; } }
-  function parseAmt(){
-    const v=(amountEl.value||"").trim();
-    if(!v||!/^\d*\.?\d*$/.test(v)) return null;
-    try{ const p=ethers.parseUnits(v,decimals); return p>0n?p:null; }catch{ return null; }
-  }
+  const fmt=raw=>Number(ethers.formatUnits(raw,decimals)).toLocaleString(undefined,{maximumFractionDigits:4});
+  function wireLive(){ if(!window.ethereum||window.ethereum.__arcWired) return; window.ethereum.__arcWired=true;
+    window.ethereum.on("accountsChanged",()=>location.reload()); window.ethereum.on("chainChanged",()=>location.reload()); }
+  const validAddr=a=>{ try{ return ethers.isAddress(a); }catch{ return false; } };
+  function parseAmt(){ const v=(amountEl.value||"").trim(); if(!v||!/^\d*\.?\d*$/.test(v)) return null;
+    try{ const p=ethers.parseUnits(v,decimals); return p>0n?p:null; }catch{ return null; } }
   function render(){
     if(busy) return;
     if(!account){ setChip("","Not connected"); action.textContent="Connect wallet"; action.disabled=false; return; }
@@ -372,35 +315,24 @@
     if(to&&!validAddr(to)){ toHint.classList.remove("ok"); toHint.textContent="Not a valid address."; }
     else if(to&&account&&to.toLowerCase()===account.toLowerCase()){ toHint.classList.remove("ok"); toHint.textContent="That's your own address."; }
     else toHint.textContent="";
-    const amt=parseAmt();
-    const okAddr=validAddr(to)&&to.toLowerCase()!==account.toLowerCase();
-    const enough=amt!==null&&amt<=balance;
+    const amt=parseAmt(), okAddr=validAddr(to)&&to.toLowerCase()!==account.toLowerCase(), enough=amt!==null&&amt<=balance;
     actionHint.classList.add("ok");
-    if(amt!==null&&amt>balance){ actionHint.classList.remove("ok"); actionHint.textContent="Amount exceeds your balance."; }
-    else actionHint.textContent="";
+    if(amt!==null&&amt>balance){ actionHint.classList.remove("ok"); actionHint.textContent="Amount exceeds your balance."; } else actionHint.textContent="";
     if(!amt){ action.textContent="Enter an amount"; action.disabled=true; }
     else if(!okAddr){ action.textContent="Add a recipient"; action.disabled=true; }
     else if(!enough){ action.textContent="Insufficient balance"; action.disabled=true; }
     else { action.textContent="Pay "+amountEl.value.trim()+" USDC"; action.disabled=false; }
   }
   async function pay(){
-    const amt=parseAmt(), to=toEl.value.trim();
-    if(!amt||!validAddr(to)) return;
-    busy=true; action.disabled=true; action.innerHTML='<span class="spin"></span> Confirm in wallet…';
-    actionHint.classList.add("ok"); actionHint.textContent="";
-    try{
-      const c=new ethers.Contract(USDC,ERC20,signer);
-      const tx=await c.transfer(to,amt);
-      action.innerHTML='<span class="spin"></span> Settling on Arc…';
-      const rcpt=await tx.wait();
-      const blk=await provider.getBlock(rcpt.blockNumber);
-      showReceipt({ amount:amountEl.value.trim(), from:account, to, hash:tx.hash,
-        block:rcpt.blockNumber, time:blk?new Date(blk.timestamp*1000):new Date(), memo:memoEl.value.trim() });
+    const amt=parseAmt(), to=toEl.value.trim(); if(!amt||!validAddr(to)) return;
+    busy=true; action.disabled=true; action.innerHTML='<span class="spin"></span> Confirm in wallet…'; actionHint.classList.add("ok"); actionHint.textContent="";
+    try{ const c=new ethers.Contract(USDC,ERC20,signer); const tx=await c.transfer(to,amt);
+      action.innerHTML='<span class="spin"></span> Settling on Arc…'; const rcpt=await tx.wait(); const blk=await provider.getBlock(rcpt.blockNumber);
+      showReceipt({amount:amountEl.value.trim(),from:account,to,hash:tx.hash,block:rcpt.blockNumber,time:blk?new Date(blk.timestamp*1000):new Date(),memo:memoEl.value.trim()});
     }catch(e){ busy=false; handleErr(e); render(); }
   }
   function handleErr(e){
-    actionHint.classList.remove("ok");
-    const code=e&&(e.code||(e.info&&e.info.error&&e.info.error.code));
+    actionHint.classList.remove("ok"); const code=e&&(e.code||(e.info&&e.info.error&&e.info.error.code));
     if(code===4001||code==="ACTION_REJECTED") actionHint.textContent="You cancelled the request.";
     else if(e&&/insufficient/i.test(e.message||"")) actionHint.textContent="Not enough USDC to cover amount + gas.";
     else actionHint.textContent=(e&&e.shortMessage)||(e&&e.message)||"Something went wrong.";
@@ -411,72 +343,36 @@
     $("rcAmt").textContent=Number(r.amount).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:6});
     $("rcFrom").textContent=short(r.from); $("rcTo").textContent=short(r.to);
     const a=$("rcTx"); a.textContent=short(r.hash)+" ↗"; a.href=EXPLORER+"/tx/"+r.hash;
-    $("rcBlock").textContent="#"+r.block;
-    $("rcTime").textContent=r.time.toLocaleString(undefined,{dateStyle:"medium",timeStyle:"short"});
+    $("rcBlock").textContent="#"+r.block; $("rcTime").textContent=r.time.toLocaleString(undefined,{dateStyle:"medium",timeStyle:"short"});
     if(r.memo){ $("rcMemo").textContent=r.memo; $("rcMemoWrap").classList.remove("hidden"); } else $("rcMemoWrap").classList.add("hidden");
-    payCard.classList.add("hidden"); payTear.classList.add("hidden");
-    receiptCard.classList.remove("hidden"); receiptTear.classList.remove("hidden");
+    payCard.classList.add("hidden"); payTear.classList.add("hidden"); receiptCard.classList.remove("hidden"); receiptTear.classList.remove("hidden");
   }
-  function reset(){
-    amountEl.value=""; memoEl.value=""; toEl.value=""; toHint.textContent="";
-    receiptCard.classList.add("hidden"); receiptTear.classList.add("hidden");
-    payCard.classList.remove("hidden"); payTear.classList.remove("hidden");
-    loadBalance(); render();
-  }
+  function reset(){ amountEl.value=""; memoEl.value=""; toEl.value=""; toHint.textContent="";
+    receiptCard.classList.add("hidden"); receiptTear.classList.add("hidden"); payCard.classList.remove("hidden"); payTear.classList.remove("hidden"); loadBalance(); render(); }
   action.addEventListener("click",()=>{ account?pay():connect(); });
   $("again").addEventListener("click",reset);
   chip.addEventListener("click",()=>{ if(!account) connect(); });
-  amountEl.addEventListener("input",render);
-  toEl.addEventListener("input",render);
+  amountEl.addEventListener("input",render); toEl.addEventListener("input",render);
   maxBtn.addEventListener("click",()=>{ amountEl.value=ethers.formatUnits(balance,decimals); render(); });
-
-  if(!hasWallet()){ setChip("warn","No wallet"); actionHint.classList.remove("ok"); actionHint.textContent="Preview mode — connect a wallet to send real testnet USDC."; }
-  else setChip("","Not connected");
+  if(!hasWallet()){ setChip("warn","No wallet"); actionHint.classList.remove("ok"); actionHint.textContent="Preview mode — connect a wallet to send real testnet USDC."; } else setChip("","Not connected");
   render();
 
-  /* ================= live market tape ================= */
-  const ASSETS=[
-    {id:"bitcoin",sym:"BTC"},{id:"ethereum",sym:"ETH"},{id:"usd-coin",sym:"USDC"},
-    {id:"solana",sym:"SOL"},{id:"chainlink",sym:"LINK"},{id:"arbitrum",sym:"ARB"}
-  ];
-  const FALLBACK={ BTC:[96000,0], ETH:[3300,0], USDC:[1.0,0], SOL:[175,0], LINK:[20,0], ARB:[0.85,0] };
+  /* live tape */
+  const ASSETS=[{id:"bitcoin",sym:"BTC"},{id:"ethereum",sym:"ETH"},{id:"usd-coin",sym:"USDC"},{id:"solana",sym:"SOL"},{id:"chainlink",sym:"LINK"},{id:"arbitrum",sym:"ARB"}];
+  const FALLBACK={BTC:[96000,0],ETH:[3300,0],USDC:[1.0,0],SOL:[175,0],LINK:[20,0],ARB:[0.85,0]};
   const track=$("tapeTrack");
-
-  function money(n){
-    if(n>=1000) return "$"+n.toLocaleString(undefined,{maximumFractionDigits:0});
-    if(n>=1) return "$"+n.toLocaleString(undefined,{maximumFractionDigits:2});
-    return "$"+n.toLocaleString(undefined,{maximumFractionDigits:4});
-  }
-  function tickEl(sym,price,chg){
-    const dir = chg>0.02?"up":chg<-0.02?"dn":"flat";
-    const arrow = dir==="up"?"▲":dir==="dn"?"▼":"·";
-    const sign = chg>0?"+":"";
-    return `<div class="tick"><span class="sym">${sym}</span><span class="px">${money(price)}</span>`+
-           `<span class="chg ${dir}">${arrow} ${sign}${chg.toFixed(2)}%</span></div>`;
-  }
-  function paint(data){
-    let html="";
-    ASSETS.forEach(a=>{ const d=data[a.sym]||FALLBACK[a.sym]; html+=tickEl(a.sym,d[0],d[1]); });
-    // duplicate the sequence so the marquee loops seamlessly at -50%
-    track.innerHTML=html+html;
-  }
+  const money=n=>n>=1000?"$"+n.toLocaleString(undefined,{maximumFractionDigits:0}):n>=1?"$"+n.toLocaleString(undefined,{maximumFractionDigits:2}):"$"+n.toLocaleString(undefined,{maximumFractionDigits:4});
+  function tickEl(sym,price,chg){ const dir=chg>0.02?"up":chg<-0.02?"dn":"flat"; const arrow=dir==="up"?"▲":dir==="dn"?"▼":"·"; const sign=chg>0?"+":"";
+    return `<div class="tick"><span class="sym">${sym}</span><span class="px">${money(price)}</span><span class="chg ${dir}">${arrow} ${sign}${chg.toFixed(2)}%</span></div>`; }
+  function paint(data){ let h=""; ASSETS.forEach(a=>{ const d=data[a.sym]||FALLBACK[a.sym]; h+=tickEl(a.sym,d[0],d[1]); }); track.innerHTML=h+h; }
   async function loadPrices(){
     const ids=ASSETS.map(a=>a.id).join(",");
     const url=`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd&include_24hr_change=true`;
-    try{
-      const res=await fetch(url,{cache:"no-store"});
-      if(!res.ok) throw new Error("bad status");
-      const j=await res.json();
-      const data={};
-      ASSETS.forEach(a=>{ const row=j[a.id]; if(row) data[a.sym]=[row.usd, row.usd_24h_change||0]; });
-      paint(data);
-    }catch(e){ paint({}); } // graceful fallback keeps the tape moving in sandbox/offline
+    try{ const res=await fetch(url,{cache:"no-store"}); if(!res.ok) throw new Error("bad"); const j=await res.json();
+      const data={}; ASSETS.forEach(a=>{ const row=j[a.id]; if(row) data[a.sym]=[row.usd,row.usd_24h_change||0]; }); paint(data);
+    }catch(e){ paint({}); }
   }
-  paint({});                 // instant render with fallback
-  loadPrices();              // then upgrade to live
-  setInterval(loadPrices,60000);
-
-  /* load motion */
+  paint({}); loadPrices(); setInterval(loadPrices,60000);
   requestAnimationFrame(()=>document.body.classList.add("ready"));
 })();
 </script>
