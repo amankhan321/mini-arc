@@ -10,15 +10,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.4/ethers.umd.min.js"></script>
 <style>
   :root{
-    --bg:#F1ECDF;
-    --card:#FCFAF5;
-    --ink:#1A1C22;
-    --ink-2:#565961;
-    --ink-faint:#8f8a7d;
-    --line:rgba(26,28,34,.12);
-    --line-2:rgba(26,28,34,.06);
-    --card-soft:#6b665a;
-    --card-faint:#a49d8e;
+    --bg:#F5F5F2;
+    --card:#FFFFFF;
+    --ink:#16181D;
+    --ink-2:#565962;
+    --ink-faint:#8b8f99;
+    --line:rgba(20,22,28,.11);
+    --line-2:rgba(20,22,28,.06);
+    --card-soft:#5f636c;
+    --card-faint:#9aa0ab;
     --volt:#3B5DF0;
     --volt-press:#2f4bd0;
     --jade:#0F9E63;
@@ -28,35 +28,27 @@
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
   body{
-    font-family:"Space Grotesk",system-ui,sans-serif;
-    color:var(--ink);
+    font-family:"Space Grotesk",system-ui,sans-serif;color:var(--ink);
     background-color:var(--bg);
-    background-image:
-      radial-gradient(115% 70% at 50% -10%, rgba(59,93,240,.06), transparent 55%),
-      linear-gradient(var(--line-2) 1px, transparent 1px),
-      linear-gradient(90deg, var(--line-2) 1px, transparent 1px);
-    background-size:auto, 48px 48px, 48px 48px;
-    min-height:100dvh;display:flex;flex-direction:column;
-    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+    background-image:radial-gradient(120% 65% at 50% -8%, rgba(59,93,240,.05), transparent 55%);
+    min-height:100dvh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased;overflow-x:hidden;
   }
   .wrap{width:100%;max-width:1180px;margin:0 auto;padding:0 28px;flex:1;display:flex;flex-direction:column}
 
   /* top rail */
   .rail{display:flex;align-items:center;justify-content:space-between;padding:22px 0 26px}
   .mark{display:flex;align-items:center;gap:10px;font-family:"IBM Plex Mono",monospace;font-size:13px;letter-spacing:.12em;font-weight:500;color:var(--ink)}
-  .mark .glyph{width:20px;height:20px;border-radius:50%;
-    background:conic-gradient(from 210deg, var(--volt), #9db0ff 140deg, var(--volt) 300deg);
-    box-shadow:0 0 0 1px rgba(0,0,0,.06) inset,0 4px 14px rgba(59,93,240,.35)}
+  .mark .glyph{width:20px;height:20px;border-radius:50%;background:conic-gradient(from 210deg, var(--volt), #9db0ff 140deg, var(--volt) 300deg);box-shadow:0 0 0 1px rgba(0,0,0,.06) inset,0 4px 14px rgba(59,93,240,.3)}
   .rail-right{display:flex;align-items:center;gap:12px}
   .tnet{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);border:1px solid var(--line);padding:5px 9px;border-radius:999px}
-  .chip{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.5);font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--ink-2);cursor:default;transition:border-color .2s,color .2s}
-  .chip .pip{width:6px;height:6px;border-radius:50%;background:#b3ab99;transition:background .25s}
+  .chip{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border:1px solid var(--line);border-radius:999px;background:var(--card);font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--ink-2);cursor:default;transition:border-color .2s,color .2s}
+  .chip .pip{width:6px;height:6px;border-radius:50%;background:#b9bcc4;transition:background .25s}
   .chip.live{color:#0c7a4b;border-color:rgba(15,158,99,.4)}
   .chip.live .pip{background:var(--jade);box-shadow:0 0 8px rgba(15,158,99,.5)}
   .chip.warn .pip{background:#d99a20;box-shadow:0 0 8px rgba(217,154,32,.5)}
 
   /* hero */
-  .hero{display:grid;grid-template-columns:1fr 404px;gap:64px;align-items:start;padding:20px 0 56px;flex:1}
+  .hero{display:grid;grid-template-columns:1fr 412px;gap:64px;align-items:start;padding:20px 0 56px;flex:1}
 
   .lead-copy{display:inline-block;transition:transform .3s cubic-bezier(.2,.7,.2,1)}
   .lead-copy:hover{transform:translateY(-5px)}
@@ -66,23 +58,19 @@
   .sub{font-size:16px;line-height:1.6;color:var(--ink-2);max-width:46ch;margin-bottom:40px}
 
   .features{display:grid;gap:8px;margin-top:8px}
-  .feat{padding:20px 16px 20px 14px;border-radius:var(--r);display:grid;grid-template-columns:26px 1fr;gap:16px;
-    border:1px solid transparent;transition:transform .28s cubic-bezier(.2,.7,.2,1),box-shadow .28s,background .28s,border-color .28s}
+  .feat{padding:20px 16px 20px 14px;border-radius:var(--r);display:grid;grid-template-columns:26px 1fr;gap:16px;border:1px solid transparent;transition:transform .28s cubic-bezier(.2,.7,.2,1),box-shadow .28s,background .28s,border-color .28s}
   .feat+.feat{border-top:1px solid var(--line)}
-  .feat:hover{transform:translateY(-4px);background:var(--card);border-color:var(--line);border-top-color:var(--line);
-    box-shadow:0 16px 30px -18px rgba(40,36,28,.4)}
+  .feat:hover{transform:translateY(-4px);background:var(--card);border-color:var(--line);border-top-color:var(--line);box-shadow:0 16px 30px -18px rgba(30,34,45,.35)}
   .feat .fi{font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--volt);padding-top:2px}
   .feat h3{font-size:16.5px;font-weight:600;letter-spacing:-.01em;margin-bottom:6px;color:var(--ink)}
   .feat p{font-size:14px;line-height:1.55;color:var(--ink-2);max-width:52ch}
 
-  /* receipt slip + 3D */
+  /* slip + 3D */
   .slip-col{perspective:1700px}
-  .slip3d{transform:rotateY(-5deg) rotateX(2deg);transform-style:preserve-3d;transform-origin:center right;
-    transition:transform .55s cubic-bezier(.2,.7,.2,1)}
+  .slip3d{transform:rotateY(-5deg) rotateX(2deg);transform-style:preserve-3d;transform-origin:center right;transition:transform .55s cubic-bezier(.2,.7,.2,1)}
   .slip3d:hover,.slip3d:focus-within{transform:rotateY(0) rotateX(0)}
 
-  .slip{position:relative;background:var(--card);color:var(--ink);border-radius:var(--r) var(--r) 0 0;padding:24px 24px 28px;
-    box-shadow:0 34px 66px -26px rgba(43,38,28,.4),0 3px 8px rgba(43,38,28,.06),0 0 0 1px rgba(0,0,0,.05)}
+  .slip{position:relative;background:var(--card);color:var(--ink);border-radius:var(--r) var(--r) 0 0;padding:24px 24px 28px;box-shadow:0 34px 66px -26px rgba(30,34,45,.32),0 3px 8px rgba(30,34,45,.06),0 0 0 1px rgba(0,0,0,.05)}
   .slip-head{display:flex;justify-content:space-between;align-items:baseline;padding-bottom:14px;margin-bottom:20px;border-bottom:1px dashed var(--line)}
   .slip-head .k{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--card-faint)}
   .slip-head .v{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--card-soft)}
@@ -91,27 +79,55 @@
   .amt-row{display:flex;align-items:baseline;gap:3px;border-bottom:2px solid var(--ink);padding-bottom:8px}
   .cur{font-family:"IBM Plex Mono",monospace;font-size:24px;color:var(--card-soft);font-weight:500;transform:translateY(-3px)}
   #amount{flex:1;min-width:0;border:none;background:transparent;outline:none;font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:46px;line-height:1;color:var(--ink);letter-spacing:-.02em}
-  #amount::placeholder{color:#d3ccbc}
+  #amount::placeholder{color:#d3d6dc}
+  .coin{width:26px;height:26px;flex:none;align-self:center}
   .unit{font-family:"Space Grotesk";font-weight:600;font-size:14px;color:var(--card-soft);letter-spacing:.02em}
   .bal{display:flex;justify-content:space-between;margin-top:9px;font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--card-soft)}
   .bal .max{cursor:pointer;color:var(--volt);font-weight:600}
   .bal .max:hover{text-decoration:underline}
 
   .field{margin-top:18px}
-  .field label{display:block;font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--card-faint);margin-bottom:7px}
+  .field label{display:flex;align-items:center;gap:8px;font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--card-faint);margin-bottom:7px}
   .field label .opt{text-transform:none;letter-spacing:0;color:var(--card-faint)}
-  .field input{width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:var(--r);background:#fffdf8;font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--ink);outline:none;transition:border-color .15s,box-shadow .15s}
-  .field input:focus{border-color:var(--volt);box-shadow:0 0 0 3px rgba(59,93,240,.15)}
-  .field input::placeholder{color:#c2bbaa}
+  .field label .count{margin-left:auto;letter-spacing:.06em;color:var(--card-faint)}
+  .input-wrap{position:relative}
+  .input-wrap input{width:100%;padding:12px 42px 12px 13px;border:1px solid var(--line);border-radius:var(--r);background:#FBFBFA;font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--ink);outline:none;transition:border-color .15s,box-shadow .15s}
+  .field > input{width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:var(--r);background:#FBFBFA;font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--ink);outline:none;transition:border-color .15s,box-shadow .15s}
+  .input-wrap input:focus,.field > input:focus{border-color:var(--volt);box-shadow:0 0 0 3px rgba(59,93,240,.14)}
+  .input-wrap input::placeholder,.field > input::placeholder{color:#c2c6cd}
+  .in-btn{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:30px;height:30px;border:none;background:transparent;border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--card-faint);transition:background .15s,color .15s}
+  .in-btn:hover{background:rgba(20,22,28,.05);color:var(--card-soft)}
+  .in-btn svg{width:15px;height:15px}
   .hint{margin-top:7px;font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--rose);min-height:13px}
   .hint.ok{color:var(--card-faint)}
 
-  .btn{width:100%;margin-top:22px;padding:15px;border:none;border-radius:var(--r);font-family:"Space Grotesk";font-weight:600;font-size:15px;color:#fff;background:var(--volt);cursor:pointer;transition:background .15s,transform .05s,opacity .15s;display:flex;align-items:center;justify-content:center;gap:10px}
+  /* recent addresses */
+  .recent{margin-top:12px}
+  .recent .mini{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--card-faint);margin-bottom:8px}
+  .recent-list{display:flex;flex-wrap:wrap;gap:7px}
+  .rchip{display:inline-flex;align-items:center;gap:8px;padding:6px 8px 6px 7px;border:1px solid var(--line);border-radius:999px;background:var(--card);cursor:pointer;transition:border-color .15s,transform .15s,box-shadow .15s}
+  .rchip:hover{border-color:var(--volt);transform:translateY(-1px);box-shadow:0 6px 14px -8px rgba(30,34,45,.4)}
+  .rchip .ava{width:18px;height:18px;border-radius:5px;overflow:hidden;flex:none;display:block}
+  .rchip .ra{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--ink)}
+  .rchip .star{width:15px;height:15px;flex:none;color:var(--card-faint);border-radius:4px;padding:1px;transition:color .15s}
+  .rchip .star:hover{color:var(--card-soft)}
+  .rchip .star.on{color:var(--volt)}
+
+  /* cost summary */
+  .summary{margin-top:20px;border:1px solid var(--line);border-radius:var(--r);padding:6px 15px;background:#FCFCFB}
+  .srow{display:flex;justify-content:space-between;align-items:center;padding:9px 0;font-size:14px;color:var(--card-soft)}
+  .srow .lbl{display:flex;align-items:center;gap:7px}
+  .srow .est{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--card-faint);border:1px solid var(--line);border-radius:4px;padding:2px 5px}
+  .srow .val{font-family:"IBM Plex Mono",monospace;font-size:13.5px;color:var(--ink)}
+  .srow.total{border-top:1px solid var(--line);font-weight:600;color:var(--ink)}
+  .srow.total .val{color:var(--volt);font-weight:600;font-size:14.5px}
+
+  .btn{width:100%;margin-top:20px;padding:15px;border:none;border-radius:var(--r);font-family:"Space Grotesk";font-weight:600;font-size:15px;color:#fff;background:var(--volt);cursor:pointer;transition:background .15s,transform .05s,opacity .15s;display:flex;align-items:center;justify-content:center;gap:10px}
   .btn:hover:not(:disabled){background:var(--volt-press)}
   .btn:active:not(:disabled){transform:translateY(1px)}
-  .btn:disabled{opacity:.45;cursor:not-allowed}
+  .btn:disabled{opacity:.4;cursor:not-allowed}
   .btn.ghost{background:transparent;color:var(--volt);border:1px solid var(--line)}
-  .btn.ghost:hover:not(:disabled){background:#fffdf8}
+  .btn.ghost:hover:not(:disabled){background:#FBFBFA}
   .btn .spin{width:15px;height:15px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
   @keyframes spin{to{transform:rotate(360deg)}}
 
@@ -121,7 +137,7 @@
   .tear{height:13px;background:var(--card);-webkit-mask:radial-gradient(8px at 50% 0,#0000 97%,#000) 50% 0/17px 100% repeat-x;mask:radial-gradient(8px at 50% 0,#0000 97%,#000) 50% 0/17px 100% repeat-x}
 
   .params{margin-top:22px;display:flex;flex-wrap:wrap;gap:7px}
-  .param{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--ink-faint);border:1px solid var(--line);border-radius:5px;padding:6px 9px;line-height:1;background:rgba(255,255,255,.4)}
+  .param{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--ink-faint);border:1px solid var(--line);border-radius:5px;padding:6px 9px;line-height:1;background:var(--card)}
   .param b{color:var(--ink-2);font-weight:500}
 
   /* receipt state */
@@ -136,14 +152,14 @@
   .rc-row .rv{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink);text-align:right;word-break:break-all}
   .rc-row a.rv{color:var(--volt);text-decoration:none}
   .rc-row a.rv:hover{text-decoration:underline}
-  .memo-note{margin-top:13px;padding:11px 13px;background:#fffdf8;border:1px dashed var(--line);border-radius:var(--r);font-size:12.5px;color:var(--card-soft);line-height:1.5}
+  .memo-note{margin-top:13px;padding:11px 13px;background:#FBFBFA;border:1px dashed var(--line);border-radius:var(--r);font-size:12.5px;color:var(--card-soft);line-height:1.5}
   .memo-note b{display:block;font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--card-faint);margin-bottom:4px;font-weight:500}
 
   /* live tape */
-  .tape{border-top:1px solid var(--line);background:rgba(255,255,255,.35);overflow:hidden;position:relative}
+  .tape{border-top:1px solid var(--line);background:var(--card);overflow:hidden;position:relative}
   .tape::before,.tape::after{content:"";position:absolute;top:0;bottom:0;width:80px;z-index:2;pointer-events:none}
-  .tape::before{left:0;background:linear-gradient(90deg,var(--bg),transparent)}
-  .tape::after{right:0;background:linear-gradient(270deg,var(--bg),transparent)}
+  .tape::before{left:0;background:linear-gradient(90deg,var(--card),transparent)}
+  .tape::after{right:0;background:linear-gradient(270deg,var(--card),transparent)}
   .tape-track{display:flex;width:max-content;animation:marq 42s linear infinite}
   .tape:hover .tape-track{animation-play-state:paused}
   @keyframes marq{to{transform:translateX(-50%)}}
@@ -162,12 +178,11 @@
   body.ready .d2{transition-delay:.12s}
   body.ready .d3{transition-delay:.19s}
   body.ready .d4{transition-delay:.26s}
-
   .hidden{display:none!important}
 
   @media (max-width:900px){
     .hero{grid-template-columns:1fr;gap:40px;padding-top:8px}
-    .slip-col{order:-1;max-width:420px;margin:0 auto;width:100%;perspective:none}
+    .slip-col{order:-1;max-width:430px;margin:0 auto;width:100%;perspective:none}
     .slip3d{transform:none!important}
     .lead h1{font-size:clamp(34px,8vw,46px)}
   }
@@ -183,7 +198,7 @@
     .anim{opacity:1;transform:none}
     .tape-track{animation:none;transform:none}
     .slip3d{transform:none!important}
-    .lead-copy:hover,.feat:hover{transform:none}
+    .lead-copy:hover,.feat:hover,.rchip:hover{transform:none}
   }
 </style>
 </head>
@@ -204,20 +219,10 @@
           <h1>Pay in USDC,<br><em>wallet to wallet.</em></h1>
           <p class="sub">A non-custodial checkout for Arc, the stablecoin-native L1 where USDC is the gas. Enter an amount, send it, and walk away with a receipt you can verify on-chain. No account, no middleman, no backend.</p>
         </div>
-
         <div class="features anim d4">
-          <div class="feat">
-            <div class="fi">01</div>
-            <div><h3>Non-custodial by default</h3><p>Your wallet signs every transfer. Funds move straight to the recipient — they never sit on a server or pass through a third party.</p></div>
-          </div>
-          <div class="feat">
-            <div class="fi">02</div>
-            <div><h3>USDC pays its own way</h3><p>On Arc, USDC is the native gas token. There's no separate coin to acquire or top up just to move your money.</p></div>
-          </div>
-          <div class="feat">
-            <div class="fi">03</div>
-            <div><h3>A receipt you can check</h3><p>Every payment prints the transaction hash, block, and timestamp — one click confirms it independently on Arcscan.</p></div>
-          </div>
+          <div class="feat"><div class="fi">01</div><div><h3>Non-custodial by default</h3><p>Your wallet signs every transfer. Funds move straight to the recipient — they never sit on a server or pass through a third party.</p></div></div>
+          <div class="feat"><div class="fi">02</div><div><h3>USDC pays its own way</h3><p>On Arc, USDC is the native gas token. There's no separate coin to acquire or top up just to move your money.</p></div></div>
+          <div class="feat"><div class="fi">03</div><div><h3>A receipt you can check</h3><p>Every payment prints the transaction hash, block, and timestamp — one click confirms it independently on Arcscan.</p></div></div>
         </div>
       </section>
 
@@ -226,10 +231,40 @@
           <section id="payCard" class="slip">
             <div class="slip-head"><span class="k">Payment</span><span class="v">Arc Testnet</span></div>
             <div class="amt-label">Amount</div>
-            <div class="amt-row"><span class="cur">$</span><input id="amount" inputmode="decimal" placeholder="0.00" autocomplete="off" /><span class="unit">USDC</span></div>
+            <div class="amt-row">
+              <span class="cur">$</span>
+              <input id="amount" inputmode="decimal" placeholder="0.00" autocomplete="off" />
+              <svg class="coin" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="var(--card-faint)" stroke-width="1.5"/><path d="M12 6.5v11M14.4 9.2c-.5-.8-1.4-1.2-2.4-1.2-1.5 0-2.6.8-2.6 2 0 2.6 5.2 1.4 5.2 4 0 1.2-1.1 2-2.6 2-1 0-1.9-.4-2.4-1.2" stroke="var(--card-soft)" stroke-width="1.4" stroke-linecap="round"/></svg>
+              <span class="unit">USDC</span>
+            </div>
             <div class="bal"><span id="balText">Balance —</span><span id="maxBtn" class="max hidden">Max</span></div>
-            <div class="field"><label for="to">Pay to</label><input id="to" placeholder="0x… recipient address" autocomplete="off" spellcheck="false" /><div id="toHint" class="hint"></div></div>
-            <div class="field"><label for="memo">Note <span class="opt">— optional</span></label><input id="memo" placeholder="What's this payment for?" maxlength="80" autocomplete="off" /></div>
+
+            <div class="field">
+              <label for="to">Pay to</label>
+              <div class="input-wrap">
+                <input id="to" placeholder="0x… recipient address" autocomplete="off" spellcheck="false" />
+                <button id="pasteBtn" class="in-btn" title="Paste from clipboard" aria-label="Paste">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="4" width="12" height="16" rx="2"/><path d="M4 8v12a2 2 0 0 0 2 2h8"/></svg>
+                </button>
+              </div>
+              <div id="toHint" class="hint"></div>
+              <div id="recentWrap" class="recent hidden">
+                <div class="mini">Recent</div>
+                <div id="recentList" class="recent-list"></div>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="memo">Note <span class="opt">— optional</span><span id="memoCount" class="count">0/120</span></label>
+              <input id="memo" placeholder="What's this payment for?" maxlength="120" autocomplete="off" />
+            </div>
+
+            <div class="summary">
+              <div class="srow"><span class="lbl">Amount</span><span class="val" id="sumAmt">0.00 USDC</span></div>
+              <div class="srow"><span class="lbl">Network fee <span class="est">est</span></span><span class="val" id="sumGas">~0.01 USDC</span></div>
+              <div class="srow total"><span class="lbl">Total</span><span class="val" id="sumTotal">0.01 USDC</span></div>
+            </div>
+
             <button id="action" class="btn">Connect wallet</button>
             <div id="actionHint" class="hint ok" style="text-align:center;margin-top:11px"></div>
             <div class="slip-foot">Non-custodial · funds move wallet&nbsp;→&nbsp;wallet<br />via <b>0x3600…0000</b> · gas paid in USDC</div>
@@ -271,6 +306,7 @@
   const CHAIN_ID_DEC=5042002, CHAIN_ID_HEX="0x"+CHAIN_ID_DEC.toString(16);
   const RPC="https://rpc.testnet.arc.network", EXPLORER="https://testnet.arcscan.app";
   const USDC="0x3600000000000000000000000000000000000000";
+  const GAS_EST=0.01; // Arc transfers settle for ~0.01 USDC
   const ARC_PARAMS={chainId:CHAIN_ID_HEX,chainName:"Arc Testnet",nativeCurrency:{name:"USD Coin",symbol:"USDC",decimals:18},rpcUrls:[RPC],blockExplorerUrls:[EXPLORER]};
   const ERC20=["function decimals() view returns (uint8)","function balanceOf(address) view returns (uint256)","function transfer(address to, uint256 amount) returns (bool)"];
 
@@ -279,10 +315,54 @@
   const chip=$("chip"),chipText=$("chipText"),amountEl=$("amount"),toEl=$("to"),memoEl=$("memo");
   const balText=$("balText"),maxBtn=$("maxBtn"),toHint=$("toHint"),actionHint=$("actionHint"),action=$("action");
   const payCard=$("payCard"),payTear=$("payTear"),receiptCard=$("receiptCard"),receiptTear=$("receiptTear");
+  const memoCount=$("memoCount"),sumAmt=$("sumAmt"),sumGas=$("sumGas"),sumTotal=$("sumTotal");
+  const recentWrap=$("recentWrap"),recentList=$("recentList"),pasteBtn=$("pasteBtn");
   const short=a=>a?a.slice(0,6)+"…"+a.slice(-4):"";
   const hasWallet=()=>typeof window.ethereum!=="undefined";
   function setChip(s,t){ chip.className="chip"+(s?" "+s:""); chipText.textContent=t; }
+  const usd=n=>n.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
 
+  /* ---------- recent addresses (guarded persistence) ---------- */
+  let recents=[];
+  function loadRecents(){ try{ recents=JSON.parse(localStorage.getItem("miniarc.recents"))||[]; }catch{ recents=[]; } }
+  function saveRecents(){ try{ localStorage.setItem("miniarc.recents",JSON.stringify(recents)); }catch{} }
+  function pushRecent(addr){
+    addr=addr.toLowerCase();
+    const ex=recents.find(r=>r.addr===addr);
+    if(ex){ ex.ts=Date.now(); } else { recents.push({addr,fav:false,ts:Date.now()}); }
+    recents=recents.filter(r=>r.fav).concat(recents.filter(r=>!r.fav).sort((a,b)=>b.ts-a.ts).slice(0,5-recents.filter(r=>r.fav).length));
+    saveRecents(); renderRecents();
+  }
+  function identicon(addr){
+    const hex=addr.replace(/^0x/,"").toLowerCase(); let cells="";
+    for(let y=0;y<5;y++){ for(let x=0;x<3;x++){
+      const nib=parseInt(hex[(y*3+x)%hex.length]||"0",16);
+      if(nib%2===0){ cells+=`<rect x="${x}" y="${y}" width="1" height="1"/>`; if(x<2) cells+=`<rect x="${4-x}" y="${y}" width="1" height="1"/>`; }
+    }}
+    return `<svg class="ava" viewBox="0 0 5 5" fill="#3d4048"><rect width="5" height="5" fill="#eceef1"/>${cells}</svg>`;
+  }
+  const starSvg=on=>`<svg class="star ${on?"on":""}" viewBox="0 0 24 24" fill="${on?"currentColor":"none"}" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 3.5l2.6 5.3 5.9.8-4.3 4.1 1 5.8L12 17l-5.2 2.8 1-5.8L3.5 9.6l5.9-.8z"/></svg>`;
+  function renderRecents(){
+    if(!recents.length){ recentWrap.classList.add("hidden"); recentList.innerHTML=""; return; }
+    recentWrap.classList.remove("hidden");
+    const ordered=recents.filter(r=>r.fav).concat(recents.filter(r=>!r.fav));
+    recentList.innerHTML=ordered.map(r=>
+      `<span class="rchip" data-a="${r.addr}">${identicon(r.addr)}<span class="ra">${short(r.addr)}</span>`+
+      `<span class="star-hit" data-s="${r.addr}">${starSvg(r.fav)}</span></span>`).join("");
+  }
+  recentList.addEventListener("click",e=>{
+    const starHit=e.target.closest(".star-hit");
+    if(starHit){ e.stopPropagation(); const a=starHit.getAttribute("data-s"); const r=recents.find(x=>x.addr===a); if(r){ r.fav=!r.fav; saveRecents(); renderRecents(); } return; }
+    const chipEl=e.target.closest(".rchip"); if(chipEl){ toEl.value=chipEl.getAttribute("data-a"); render(); }
+  });
+
+  /* ---------- paste ---------- */
+  pasteBtn.addEventListener("click",async()=>{
+    try{ const t=await navigator.clipboard.readText(); if(t){ toEl.value=t.trim(); render(); } }
+    catch{ toEl.focus(); }
+  });
+
+  /* ---------- wallet + payment ---------- */
   async function connect(){
     if(!hasWallet()){ actionHint.classList.remove("ok"); actionHint.textContent="No EVM wallet found. Open this page with MetaMask installed."; return; }
     try{ await window.ethereum.request({method:"eth_requestAccounts"}); await ensureArc();
@@ -307,7 +387,12 @@
   const validAddr=a=>{ try{ return ethers.isAddress(a); }catch{ return false; } };
   function parseAmt(){ const v=(amountEl.value||"").trim(); if(!v||!/^\d*\.?\d*$/.test(v)) return null;
     try{ const p=ethers.parseUnits(v,decimals); return p>0n?p:null; }catch{ return null; } }
+  function updateSummary(){
+    const n=Number((amountEl.value||"").trim())||0;
+    sumAmt.textContent=usd(n)+" USDC"; sumGas.textContent="~"+usd(GAS_EST)+" USDC"; sumTotal.textContent=usd(n+GAS_EST)+" USDC";
+  }
   function render(){
+    updateSummary();
     if(busy) return;
     if(!account){ setChip("","Not connected"); action.textContent="Connect wallet"; action.disabled=false; return; }
     setChip("live",short(account)+" · Arc");
@@ -328,6 +413,7 @@
     busy=true; action.disabled=true; action.innerHTML='<span class="spin"></span> Confirm in wallet…'; actionHint.classList.add("ok"); actionHint.textContent="";
     try{ const c=new ethers.Contract(USDC,ERC20,signer); const tx=await c.transfer(to,amt);
       action.innerHTML='<span class="spin"></span> Settling on Arc…'; const rcpt=await tx.wait(); const blk=await provider.getBlock(rcpt.blockNumber);
+      pushRecent(to);
       showReceipt({amount:amountEl.value.trim(),from:account,to,hash:tx.hash,block:rcpt.blockNumber,time:blk?new Date(blk.timestamp*1000):new Date(),memo:memoEl.value.trim()});
     }catch(e){ busy=false; handleErr(e); render(); }
   }
@@ -347,17 +433,20 @@
     if(r.memo){ $("rcMemo").textContent=r.memo; $("rcMemoWrap").classList.remove("hidden"); } else $("rcMemoWrap").classList.add("hidden");
     payCard.classList.add("hidden"); payTear.classList.add("hidden"); receiptCard.classList.remove("hidden"); receiptTear.classList.remove("hidden");
   }
-  function reset(){ amountEl.value=""; memoEl.value=""; toEl.value=""; toHint.textContent="";
+  function reset(){ amountEl.value=""; memoEl.value=""; toEl.value=""; toHint.textContent=""; memoCount.textContent="0/120";
     receiptCard.classList.add("hidden"); receiptTear.classList.add("hidden"); payCard.classList.remove("hidden"); payTear.classList.remove("hidden"); loadBalance(); render(); }
   action.addEventListener("click",()=>{ account?pay():connect(); });
   $("again").addEventListener("click",reset);
   chip.addEventListener("click",()=>{ if(!account) connect(); });
   amountEl.addEventListener("input",render); toEl.addEventListener("input",render);
+  memoEl.addEventListener("input",()=>{ memoCount.textContent=memoEl.value.length+"/120"; });
   maxBtn.addEventListener("click",()=>{ amountEl.value=ethers.formatUnits(balance,decimals); render(); });
+
+  loadRecents(); renderRecents();
   if(!hasWallet()){ setChip("warn","No wallet"); actionHint.classList.remove("ok"); actionHint.textContent="Preview mode — connect a wallet to send real testnet USDC."; } else setChip("","Not connected");
   render();
 
-  /* live tape */
+  /* ---------- live tape ---------- */
   const ASSETS=[{id:"bitcoin",sym:"BTC"},{id:"ethereum",sym:"ETH"},{id:"usd-coin",sym:"USDC"},{id:"solana",sym:"SOL"},{id:"chainlink",sym:"LINK"},{id:"arbitrum",sym:"ARB"}];
   const FALLBACK={BTC:[96000,0],ETH:[3300,0],USDC:[1.0,0],SOL:[175,0],LINK:[20,0],ARB:[0.85,0]};
   const track=$("tapeTrack");
